@@ -1,4 +1,4 @@
-package java.feb;
+package javaPrg.feb;
 
 public class MatrixRotation {
 
