@@ -14,6 +14,7 @@ public class PalindromicNumbers {
 				"\n0.1 " + isPalindromic(0.1) +
 				"\n1.0 " + isPalindromic(1.0) +
 				"\n1.1 " + isPalindromic(1.1) +
+				"\n10.01 " + isPalindromic(10.01) +
 				"\n92.2945 " + isPalindromic(92.2945) +
 				"\n2213312.22 " + isPalindromic(2213312.22) +
 				"\n12343.21 " + isPalindromic(12343.21) +
@@ -23,13 +24,12 @@ public class PalindromicNumbers {
 	private static boolean isPalindromic(double inp) {
 		long tmp= (long)inp;
 		double num = inp;
-		int cnt = 0;
 		while(tmp > 0 && num != (long)num) {
 			tmp/=10;
 			num*=10;
 		}
 		if(tmp == 0 && num == (long)num) {
-			return isPalindromic(num);
+			return isPalindromic((long)num);
 		}
 		return false;
 	}
