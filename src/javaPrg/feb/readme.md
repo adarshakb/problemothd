@@ -1,3 +1,32 @@
+King's Gold
+===============
+Many, many moons ago there was a fair king who oversaw 10 villages. As the king, he required a village tax of 1 gold bar per day per village. Each gold bar is supposed to weigh 1000g and have the village name etched in to it. However, the king has learned through an informant that one village has been cheating him the whole time and only giving him a bar that weighs 999g.
+
+The king is furious and orders a scale to be brought in to test the weight of the gold bars. Assuming the king has access to all the gold bars ever sent to him, how can he figure out which village has been cheating him the whole time by using the scale only once?
+
+Vigenère cipher
+=================
+The Vigenère cipher made its rounds in the mid-1550s up until the end of the American Civil War. It was very easy for soldiers to encode messages and pass them around to all the allied camps.
+
+The cipher requires a key and a message. It works like this:
+
+Key:
+REDDIT
+Message:
+TODAYISMYBIRTHDAY
+REDDITREDDITREDDI
+TODAYISMYBIRTHDAY
+--------------------------
+KSGDGBJQBEQKKLGDG
+
+Using a 0 based alphabet (A=0), R is the 17th letter of the alphabet and T is the 19th letter of the alphabet. (17 + 19) mod 26 = 11 which is where K resides in the alphabet. Repeat for each key/message letter combination until done.
+
+Today's problem of the day is two part. The first part is to implement a Vigenère cipher in the programming language of your choice. Feel free to post solutions or links to solutions in the comments.
+
+The second part is to try and implement something to crack the message below (the key is 5 or less characters).
+
+ZEJFOKHTMSRMELCPODWHCGAW
+
 MatrixRotation.java
 ===============
 The bank manager at my local bank recently gave me the algorithm to access the bank's vault. I thought I'd pass on the algorithm to you all for "safe keeping". Basically the vault has a USB port which you'll need to plug in to. Once plugged in the vault will send you an NxN matrix such as the one below.
