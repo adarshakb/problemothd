@@ -62,3 +62,9 @@ Palindromic Numbers
 A palindromic number is a number that reads the same forwards as it does backwards. 123321 is a palindromic number where as 321321 is not. Negative numbers may be considered palindromic or not; it's up to you until someone proves otherwise.
 
 Your mission, should you choose to accept it, is to create a program to return whether a number is a palindromic number or not. To make things slightly more interesting you may not use a string or array in your solution. Thus doing something like "123.toString()" is not allowed.
+
+Clock Hands
+============
+Write a program to find the minimum angle between two hands on a 24 hour clock. For instance, the angle at 6:00 is 90 degrees and the angle at 18:00 is also 90 degrees. At 6:17 the degree is 3.5 and at 18:17 it's 176.5 (hooray for supplementary angles).
+
+For fun, program this one up in a language you've never used before. Here is a list of esoteric languages to help you decide. There are some truly interesting languages on that list. Feel free to use a "standard" language as well if there's one out there that you've been looking to learn.
