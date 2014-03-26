@@ -1,4 +1,4 @@
-King's Gold
+	King's Gold
 ===============
 Many, many moons ago there was a fair king who oversaw 10 villages. As the king, he required a village tax of 1 gold bar per day per village. Each gold bar is supposed to weigh 1000g and have the village name etched in to it. However, the king has learned through an informant that one village has been cheating him the whole time and only giving him a bar that weighs 999g.
 
@@ -68,3 +68,35 @@ Clock Hands
 Write a program to find the minimum angle between two hands on a 24 hour clock. For instance, the angle at 6:00 is 90 degrees and the angle at 18:00 is also 90 degrees. At 6:17 the degree is 3.5 and at 18:17 it's 176.5 (hooray for supplementary angles).
 
 For fun, program this one up in a language you've never used before. Here is a list of esoteric languages to help you decide. There are some truly interesting languages on that list. Feel free to use a "standard" language as well if there's one out there that you've been looking to learn.
+
+ProductOfAnArray.java
+=================
+
+QUESTION: 
+
+Given an array of integers, produce an array whose values are the product of every other integer
+
+excluding the current index.
+
+Example: 
+
+[4, 3, 2, 8] -> [3*2*8, 4*2*8, 4*3*8, 4*3*2] -> [48, 64, 96, 24]
+
+SudokuProb.java
+===============
+IMPORTANT DETAILS: 
+
+A Sudoku puzzle consists of a 9x9 grid, where the objective is to fill the grid with the digits 1-9 
+
+such that each digit appears only once in each: 
+
+- Row 
+- Column 
+- 3x3 Sub-grid (Note: The sub-grids do not overlap) 
+
+QUESTION: 
+
+Write a method that checks whether a filled out grid is a valid solution. 
+
+- You may use a matrix of ints to represent the grid. 
+- You may assume that no values less than 1 or greater than 9 will appear in the grid.
