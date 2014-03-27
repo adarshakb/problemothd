@@ -9,17 +9,17 @@ public class SudokuProb {
 			
 			//Correct input
 			System.out.println(solver.sudoku(new int[][]{
-					{1,2,3,4,5,6,7,8,9},
-					{2,3,4,5,6,7,8,9,1},
-					{3,4,5,6,7,8,9,1,2},
+					{5,3,4,6,7,8,9,1,2},
+					{6,7,2,1,9,5,3,4,8},
+					{1,9,8,3,4,2,5,6,7},
 					
-					{4,5,6,7,8,9,1,2,3},
-					{5,6,7,8,9,1,2,3,4},
-					{6,7,8,9,1,2,3,4,5},
+					{8,5,9,7,6,1,4,2,3},
+					{4,2,6,8,5,3,7,9,1},
+					{7,1,3,9,2,4,8,5,6},
 					
-					{7,8,9,1,2,3,4,5,6},
-					{8,9,1,2,3,4,5,6,7},
-					{9,1,2,3,4,5,6,7,8}
+					{9,6,1,5,3,7,2,8,4},
+					{2,8,7,4,1,9,6,3,5},
+					{3,4,5,2,8,6,1,7,9}
 					
 				}));
 			
@@ -73,81 +73,45 @@ You may assume that no values less than 1 or greater than 9 will appear in the g
 	 * sudoku is given in a 9*9 2D integer array in java
 	 * 
 	 * Logic:
-	 * Check each row and each column add upto 45. This will check all the 3 conditions.
-	 * Do this in parallel to reduce time.
+	 * Check each row and each column and each 3*3 matrix add upto 45.
 	 * 
 	 * Complexity:
 	 * where n is the number of rows/columns in the input.
 	 * 
-	 * Space: o(n) - only extra pointer variables/storage for rows/columns used.
-	 * 
-	 * Time: o(n) 
+	 * Time o(n^2)
+	 * space o(1)
 	 */
 	public boolean sudoku(int[][] inp) throws Exception {
 		
 		if(!(inp.length > 0 && inp[0].length > 0 && inp.length == inp[0].length))
 			throw new Exception("Exception with input values");
-		
-		boolean ans = true;
-		
-		Thread[] horizontal = new Thread[inp.length];
-		Thread[] verticle = new Thread[inp.length];
-		summer[] values = new summer[2*inp.length];
-		
-		
-		for(int i=0,j=0;i<inp.length;i++) {
-			values[j] = new summer(inp, true, i);
-			horizontal[i] = new Thread(values[j]);
-			j++;
-			values[j] = new summer(inp, false, i);
-			verticle[i] = new Thread(values[j]);
-			j++;
-			
-			horizontal[i].start();
-			verticle[i].start();
-		}
-		
-		for(int i=0;i<inp.length;i++) {
-			horizontal[i].join();
-			verticle[i].join();
-			
-			if(values[i].getValue() != 45 || values[i+1].getValue() != 45)
-				return false;
-		}
-		
-		return true;
-	}
 	
-	public class summer implements Runnable {
-		private int[][] inp;
-		private boolean horizontal = true;
-		int num = 0;
-		private long value = 0;
-		
-		public summer(int[][] inpIn, boolean horizontalIn,int numIn) {
-			inp = inpIn;
-			horizontal = horizontalIn;
-			num = numIn;
+		int sum1 = 0,sum2 = 0;
+		for(int i=0;i<inp.length;i++) {
+			for(int j=0;j<inp.length;j++) {
+				sum1 += inp[i][j];
+				sum2 += inp[j][i];
+			}
+			if(sum1 != 45 || sum2 != 45) {
+				return false;
+			}
+			sum1=sum2=0;
 		}
 		
-		@Override
-		public void run() {
-			setValue(0);
-			for(int i=0;i<inp.length;i++) {
-				if(horizontal) {
-					value += inp[num][i];
-				} else {
-					value += inp[i][num];
+		
+		sum1 = 0;
+		for(int i=0;i<3;i+=3) {
+			for(int j=0;j<3;j+=3) {
+				int tmp = 	inp[i][j] + inp[i][j+1] + inp[i][j+2] + 
+							inp[i+1][j] + inp[i+1][j+1] + inp[i+1][j+2] + 
+							inp[i+2][j] + inp[i+2][j+1] + inp[i+2][j+2] ;
+				if(tmp != 45) {
+					System.out.println("s2");
+					return false;
 				}
 			}
 		}
-		
-		public long getValue() {
-			return value;
-		}
-		
-		public void setValue(long valueIn) {
-			value = valueIn;
-		}
+
+		return true;
 	}
 }
