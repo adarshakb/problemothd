@@ -78,40 +78,151 @@ You may assume that no values less than 1 or greater than 9 will appear in the g
 	 * Complexity:
 	 * where n is the number of rows/columns in the input.
 	 * 
-	 * Time o(n^2)
-	 * space o(1)
+	 * Time o(n)
+	 * space o(n) in number of objects
 	 */
 	public boolean sudoku(int[][] inp) throws Exception {
 		
 		if(!(inp.length > 0 && inp[0].length > 0 && inp.length == inp[0].length))
 			throw new Exception("Exception with input values");
 	
-		int sum1 = 0,sum2 = 0;
+		Thread[] horizontal = new Thread[inp.length];
+		summerHorizontal[] sumH = new summerHorizontal[inp.length];
+		Thread[] vertical = new Thread[inp.length];
+		summerVertical[] sumV = new summerVertical[inp.length];
+		summerGrid gridObj = new summerGrid(inp, 0);
+		Thread grid = new Thread(gridObj);
+		grid.start();
+		
 		for(int i=0;i<inp.length;i++) {
-			for(int j=0;j<inp.length;j++) {
-				sum1 += inp[i][j];
-				sum2 += inp[j][i];
-			}
-			if(sum1 != 45 || sum2 != 45) {
-				return false;
-			}
-			sum1=sum2=0;
+			sumH[i] = new summerHorizontal(inp, i);
+			sumV[i] = new summerVertical(inp, i);
+			
+			horizontal[i] = new Thread(sumH[i]);
+			vertical[i] = new Thread(sumV[i]);
+			
+			horizontal[i].start();
+			vertical[i].start();
 		}
 		
 		
-		sum1 = 0;
-		for(int i=0;i<3;i+=3) {
-			for(int j=0;j<3;j+=3) {
-				int tmp = 	inp[i][j] + inp[i][j+1] + inp[i][j+2] + 
-							inp[i+1][j] + inp[i+1][j+1] + inp[i+1][j+2] + 
-							inp[i+2][j] + inp[i+2][j+1] + inp[i+2][j+2] ;
-				if(tmp != 45) {
-					System.out.println("s2");
-					return false;
+		for(int i=0;i<inp.length;i++) {
+			horizontal[i].join();
+			vertical[i].join();
+			
+			if ((sumH[i].isAns() && sumV[i].isAns()) == false) {
+				return false;
+			}
+		}
+		
+		grid.join();
+
+		return true && gridObj.isAns();
+	}
+	
+	public class summerHorizontal implements Runnable {
+		int[][] inp;
+		int num;
+		
+		private boolean ans = true;
+		
+		
+		public summerHorizontal(int[][] inpIn,int numIn) {
+			inp = inpIn;
+			num = numIn;
+			
+		}
+
+		@Override
+		public void run() {
+			int sum1 = 0;
+			for(int i=0;i<inp.length;i++) {
+					sum1 += inp[i][num];
+			}
+			
+			if(sum1 != 45 ) {
+				setAns(false);
+			}
+				
+		}
+
+		public void setAns(boolean ans) {
+			this.ans = ans;
+		}
+
+		public boolean isAns() {
+			return ans;
+		}
+
+	}
+	public class summerVertical implements Runnable {
+		int[][] inp;
+		int num;
+		
+		private boolean ans = true;
+		
+		
+		public summerVertical(int[][] inpIn,int numIn) {
+			inp = inpIn;
+			num = numIn;
+			
+		}
+
+		@Override
+		public void run() {
+			int sum1 = 0;
+			for(int i=0;i<inp.length;i++) {
+					sum1 += inp[num][i];
+			}
+			
+			if(sum1 != 45 ) {
+				setAns(false);
+			}
+				
+		}
+
+		public void setAns(boolean ans) {
+			this.ans = ans;
+		}
+
+		public boolean isAns() {
+			return ans;
+		}
+
+	}
+	public class summerGrid implements Runnable {
+		int[][] inp;
+		int num;
+		
+		private boolean ans = true;
+		
+		
+		public summerGrid(int[][] inpIn,int numIn) {
+			inp = inpIn;
+			num = numIn;
+			
+		}
+
+		@Override
+		public void run() {
+			for(int i=0;i<3;i+=3) {
+				for(int j=0;j<3;j+=3) {
+					int tmp = 	inp[i][j] + inp[i][j+1] + inp[i][j+2] + 
+								inp[i+1][j] + inp[i+1][j+1] + inp[i+1][j+2] + 
+								inp[i+2][j] + inp[i+2][j+1] + inp[i+2][j+2] ;
+					if(tmp != 45) {
+						setAns(false);
+					}
 				}
 			}
 		}
 
-		return true;
+		public void setAns(boolean ans) {
+			this.ans = ans;
+		}
+
+		public boolean isAns() {
+			return ans;
+		}
 	}
 }
